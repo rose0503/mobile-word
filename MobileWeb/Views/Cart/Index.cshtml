@@ -1,0 +1,447 @@
+﻿@model List<MobileWeb.Models.CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using MobileWeb.Controllers
+
+@section jsFooter{
+
+    <script src="/Content/client/js/controller/cartController.js"></script>
+}
+
+<style>
+
+        body {
+            font-size: 14px;
+            font-family: Arial;
+            color: #333;
+        }
+
+        .main {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-trang {
+            width: 600px;
+        }
+
+        .dau_trang {
+            display: flex;
+            font-size: 14px;
+            justify-content: space-between;
+        }
+
+        .sp_khac {
+            display: flex;
+            position: relative;
+            line-height: 15px;
+            font-size: 14px;
+            color: #288ad6!important;
+            padding: 15px 0 0 20px;
+        }
+
+            .sp_khac::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-right: 7px solid #288ad6;
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+                position: absolute;
+                left: 0px;
+            }
+
+        .dau_trang .gio_hang {
+            margin-left: 40px;
+            padding: 15px 0 0 20px;
+            line-height: 15px;
+        }
+
+        .khung_donhang {
+            margin: 15px 0;
+            border: 1px solid #f5f5f5;
+            border-radius: 4px;
+            box-shadow: 0 0 10px 10px #e1e1e1;
+        }
+
+        .row_each_sp {
+            display: grid;
+            grid-template-columns: 110px auto 120px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ebebeb
+        }
+
+        .anh_sp_dh img {
+            width: 100px;
+            height: 100px;
+            display: table-row;
+            padding: 5px;
+        }
+
+        .anh_sp_dh {
+            width: 100px;
+            justify-content: center;
+        }
+
+            .anh_sp_dh button {
+                justify-content: center;
+                border: 0;
+                background: #fff;
+                color: #999;
+                font-size: 12px;
+                width: 100px;
+                padding: 5px 0;
+            }
+
+        .thong_tin_sp {
+            padding: 0 5px 0 15px;
+        }
+
+            .thong_tin_sp .ten_sp {
+                font-weight: bold;
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 4px;
+            }
+
+
+
+            .thong_tin_sp ul li {
+                font-size: 12px;
+                color: #333333;
+            }
+
+        .thong_tin_gia .gia_sp {
+            color: #c10017;
+            font-size: 14px;
+            font-weight: normal;
+            float: right;
+            display: table-row;
+        }
+
+        .btn-secondary {
+            background-color: #fff;
+        }
+
+        .w3-button {
+            margin-top: 15px;
+            width: 152px;
+            height: 34px;
+            border-radius: 4px;
+            text-align: left;
+            padding: 4px 10px;
+            font-size: 14px;
+            color: #288ad6;
+            border: 1px solid #ebebeb;
+        }
+
+        .do-xuong::after {
+            content: '';
+            width: 0;
+            right: 0;
+            border-top: 6px solid #288ad6;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 8px 10px 0 5px;
+            float: right;
+            position: absolute;
+        }
+
+        .w3-black {
+            background-color: #fff !important;
+            color: #288ad6 !important;
+        }
+
+        .chon_so_luong {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: 130px;
+            border: 1px solid #dfdfdf;
+            background: #fff;
+            border-radius: 3px;
+            line-height: 32px;
+            font-size: 11px;
+            color: #333;
+            margin: 100px 0 5px 0;
+        }
+
+        .row_thanh_toan {
+            display: grid;
+            grid-template-columns: auto auto;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        .cot-trai .can-thanh-toan {
+            font-weight: bold;
+        }
+
+        .cot-trai div{
+            margin: 8px 0;
+        }
+
+        .cot-gia div{
+            text-align: right;
+            margin: 8px 0;
+        }
+
+            .cot-gia .gia-tong {
+                font-size: 16px;
+                color: #c10017;
+                font-weight: bold;
+            }
+
+        .ad-promotions {
+            margin-top: 10px;
+        }
+
+            .ad-promotions input {
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                padding: 9px;
+                width: 60%;
+                height: 36px;
+                margin-right: 10px;
+            }
+
+            .ad-promotions button {
+                border-radius: 4px;
+                border: none;
+                background: #288ad6;
+                color: #fff;
+                height: 36px;
+                text-align: center;
+                width: 90px;
+            }
+
+        .thong-tin-kh {
+            margin-top: 10px;
+            padding: 15px 20px;
+        }
+
+            .thong-tin-kh input {
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                padding: 9px;
+                width: 60%;
+                height: 36px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+        .nut-thanh-toan {
+            padding: 15px 150px 0;
+        }
+
+        .area-order {
+            margin-bottom: 20px;
+            width: 300px;
+        }
+
+        .area-order {
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid #fd6e1d;
+            border-radius: 4px;
+            background: -webkit-linear-gradient(top,#f59000,#fd6e1d);
+            background-image: -webkit-linear-gradient(top, rgb(245, 144, 0), rgb(253, 110, 29));
+            background-position-x: initial;
+            background-position-y: initial;
+            background-size: initial;
+            background-position-x: initial;
+            background-position-y: initial;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: initial;
+        }
+
+            .area-order .buy-now {
+                font-size: 16px;
+                color: white!important;
+            }
+
+        .nhap-soluong input {
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            border: none;
+            padding: 9px;
+            width: 100%;
+            height: 36px;
+            margin-top: 100px 0 5px;
+            font-size: 14px;
+        }
+
+        .mau-sp {
+            display: flex;
+            margin-top: 50px;
+        }
+
+        .nut-bam {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            border-bottom: 1px solid #ebebeb;
+        }
+
+            .nut-bam button {
+                border: 1px solid #288ad6;
+                border-radius: 4px;
+                padding: 9px 0 10px 0;
+                width: 200px;
+                height: 36px;
+                margin: 15px;
+                background: #288ad6;
+                color: white;
+            }
+
+
+
+        .btn-secondary {
+            background-color: #cd1f25 !important;
+        }
+
+        .nut-xoa{
+            margin:39px 39px;
+        }
+
+        .nothing_sp{
+            text-align:center;
+        }
+
+    </style>
+@*<div class="content">
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Mã SP</td>
+                        <td>Tên SP</td>
+                        <td>Ảnh SP</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.Product.ID</td>
+                        <td>@item.Product.Name</td>
+                        <td><img src="@item.Product.Image" width="100" /></td>
+                        <td><input type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                        <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                        <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                        <td><a href="#" data-id="@item.Product.ID" class="btn-delete">Xoá</a></td>
+                    </tr>
+                       
+                    }
+
+                </tbody>
+            </table>
+            
+            <button id="btnContinue" class="btn">Tiếp tục mua hàng</button>
+            <button id="btnUpdate" class="btn">Cập nhật giỏ hàng</button>
+            <button id="btnDeleteAll" class="btn">Xoá giỏ hàng</button>
+            <button id="btnPayment" class="btn">Thanh toán</button>
+    }
+        else
+        {
+            <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
+        }
+
+    </div>
+</div>*@
+<body>
+    <div class="main-trang">
+        <div class="dau_trang">
+            <a class="sp_khac" id="btnContinue" >Mua thêm sản phẩm khác</a>
+            <div class="gio_hang">Giỏ hàng của bạn</div>
+        </div>
+        <div class="khung_donhang" style="background:white">
+            @if (Model.Count > 0)
+            {
+                decimal? tong = 0;
+                decimal? giagiam = 0;
+                foreach (var item in Model)
+                {
+
+                    <div class="row_each_sp">
+                        <div class="anh_sp_dh">
+                            <a><img src="@item.Product.Image" /></a>
+                            <div style="margin-top:12px">
+                                <a class="nut-xoa btn-delete" href="#" data-id="@item.Product.ID">Xoá</a>
+                            </div>
+
+                        </div>
+                        <div class="thong_tin_sp">
+                            <div class="ten_sp">@item.Product.Name</div>
+                            <ul style="list-style-type:disc;">
+                                <li>Giảm thêm 3% (1.020.000₫) cho khách mua online có sinh nhật trong tháng 11.</li>
+                                <li>Phiếu mua hàng trị giá 1 triệu</li>
+                            </ul>
+                            <div class="mau-sp">
+                                <p>Màu:</p><label style="padding-left: 4px;">@item.Product.Color</label>
+                            </div>
+                        </div>
+                        <div class="thong_tin_gia">
+                            <div class="gia_sp">@item.Product.Price.GetValueOrDefault(0).ToString("N0")</div>
+                            <div class="chon_so_luong">
+                                <div class="nhap-soluong">
+                                    <input type="number" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    tong += ((item.Product.Price.GetValueOrDefault(0) * item.Quantity));
+                    giagiam += item.Product.PromotionPrice;
+                }
+                <div class="row_thanh_toan">
+                    <div class="cot-trai">
+                        <div>Tổng tiền</div>
+                        <div>Giảm</div>
+                        <div class="can-thanh-toan">Cần thanh toán</div>
+                        <div class="ad-promotions"><input type="text" placeholder="Nhập mã giảm giá" /><button>Áp dụng</button></div>
+                    </div>
+                    <div class="cot-gia">
+                        <div>@tong.GetValueOrDefault(0).ToString("N0")</div>
+                        <div>@giagiam.GetValueOrDefault(0).ToString("N0")</div>
+                        <div class="gia-tong">@((tong - giagiam).GetValueOrDefault(0).ToString("N0"))</div>
+                    </div>
+                </div>
+                <div class="nut-bam">
+                    <button id="btnUpdate">Cập nhật giỏ hàng</button>
+                    <button id="btnDeleteAll">Xóa giỏ hàng</button>
+                </div>
+                <div class="nut-thanh-toan">
+                    <div class="area-order">
+                        <a class="buy-now" id="btnPayment" style="text-decoration:none">
+                            <div style="padding-top:7px; font-weight:bold; font-size:14px">THANH TOÁN KHI NHẬN HÀNG</div>
+                            <div style="padding-bottom:7px; font-size:14px">Xem hàng trước, không mua không sao</div>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger nothing_sp">Chưa có sản phẩm nào trong giỏ hàng</div>
+            }
+
+
+
+
+        </div>
+        
+
+    </div>
+</body>

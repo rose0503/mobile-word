@@ -1,0 +1,190 @@
+﻿@*@model Model.EF.Footer
+@Html.Raw(Model.Content)*@
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/Content/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/Content/client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="/Content/client/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/Content/client/js/move-top.js"></script>
+    <script type="text/javascript" src="/Content/client/js/easing.js"></script>
+    <script type="text/javascript" src="/Content/client/js/startstop-slider.js"></script>
+
+
+    @*<link href="~/Content/client/css/Carousel.css" rel="stylesheet" />
+    <script src="/Content/client/js/Carousel.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
+</head>
+
+<style>
+
+    body {
+        font-size: 14px !important;
+        font-family: Arial !important;
+        text-decoration: none !important;
+    }
+
+    .headertop_desc {
+        padding: 20px 0 2px 0;
+    }
+
+    .header_top {
+        padding: 0px 0;
+    }
+
+    .footer{
+        margin-top:-1px!important;
+    }
+
+    .footer h4 {
+        font-family: Arial;
+    }
+
+    .footer .span_1_of_4 {
+        width: 25%;
+        border:none;
+    }
+
+    .footer .section {
+        display: flex;
+    }
+
+    .footer .social-icons {
+        padding: 1.5% 1.5% 0 0;
+        margin: 0% 0 1% 3.6%
+    }
+
+        .footer .social-icons a {
+            height: 30px;
+            width: 30px;
+        }
+
+    .cart {
+        padding: 14px 20px 0 0;
+    }
+
+    .input-dang-nhap {
+        justify-content: center;
+        text-align: center;
+    }
+
+        .input-dang-nhap input {
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            padding: 9px;
+            width: 80%;
+            height: 36px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+    .modal-content {
+        width: 80% !important;
+    }
+
+        .modal-content .modal-footer button {
+            width: 90px;
+            height: 30px;
+            font-size: 14px;
+        }
+
+    a:hover {
+        text-decoration: none !important;
+    }
+
+    .headertop_desc .account_desc a {
+        font-size: 14px;
+        text-decoration: none !important;
+    }
+
+    .col_1_of_4 ul li a {
+        font-size: 14px;
+    }
+
+    .modal-open {
+        padding-right: 0 !important;
+    }
+
+    .custom-dropdown {
+        border: none !important;
+        background-color: #FFF !important;
+    }
+
+    .btn-dropdown {
+        background: white !important;
+        color: black !important;
+        border: none !important;
+    }
+
+    .btn-secondary:focus {
+        box-shadow: none !important;
+    }
+
+    .btn:focus {
+        box-shadow: none !important;
+    }
+
+    .border-none .dropdown .btn-dropdown {
+        color: #9C9C9C !important;
+    }
+
+        .border-none .dropdown .btn-dropdown:hover {
+            color: #E4292F !important;
+        }
+
+    .border-none .dropdown-menu .dropdown-item:active {
+        background: none !important;
+    }
+</style>
+<div class="footer">
+    <div class="wrap" style="width:1105px;">
+        <div class="section group">
+            <div class="col_1_of_4 span_1_of_4">
+
+                <img src="~/Data/1.jpg" width="200" height="50" />
+            </div>
+            <div class="col_1_of_4 span_1_of_4">
+                <h4>Chi nhánh</h4>
+                <ul>
+                    <li><a href="about.html">55 Trần Hưng Đạo, P10, Q5, TP HCM</a></li>
+                    <li><a href="contact.html">23 Sư Vạn Hạnh, P15, Q10, TP HCM</a></li>
+                    <li><a href="#">142 Nguyễn Thị Thập, P5, Q7, TP HCM</a></li>
+
+                </ul>
+            </div>
+
+            <div class="col_1_of_4 span_1_of_4">
+                <h4>Liên hệ</h4>
+                <ul>
+                    <li><span>+84 324347983</span></li>
+                    <li><span>+84 239120412</span></li>
+                </ul>
+            </div>
+            <div class="social-icons col_1_of_4 span_1_of_4">
+                <h4>Theo dõi</h4>
+                <ul>
+                    <li><a href="#" target="_blank"><img src="~/Data/Facebook_logo.png" /></a></li>
+                    <li><a href="#" target="_blank"><img src="~/Data/Twitter_logo.png" /></a></li>
+                    <li><a href="#" target="_blank"><img src="~/Data/Logo_Intagram.png" /></a></li>
+                    <li><a href="#" target="_blank"><img src="~/Data/Logo_Youtube.png" /></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+</script>
+<a href="#" id="toTop"><span id="toTopHover"> </span></a>

@@ -1,0 +1,210 @@
+﻿<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html lang="vi-VN" >
+<head>
+    <title>Free Home Shoppe Website Template | Home :: w3layouts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/Content/client/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/client/css/boostrap-social.css" rel="stylesheet" />
+    <link href="/Content/client/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Content/client/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="/Content/client/css/jquery-ui.css" rel="stylesheet" />
+    <link href="/Content/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/Content/client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/Content/client/js/jquery-1.11.3.min.js"></script>
+    <script src="/Content/client/js/jquery-ui.js"></script>
+    <script src="/Content/client/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/client/js/move-top.js"></script>
+    <script type="text/javascript" src="/Content/client/js/easing.js"></script>
+    <script type="text/javascript" src="/Content/client/js/startstop-slider.js"></script>
+
+
+    <link href="~/Content/client/css/Carousel.css" rel="stylesheet" />
+    <script src="/Content/client/js/Carousel.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+
+        body {
+            font-size: 14px !important;
+            font-family: Arial !important;
+            text-decoration: none !important;
+        }
+
+        .headertop_desc {
+            padding: 14px 0 2px 0;
+        }
+
+        .header_top {
+            padding: 0px 0;
+        }
+
+
+
+        .cart {
+            padding: 14px 20px 0 0;
+        }
+
+        .input-dang-nhap {
+            justify-content: center;
+            text-align: center;
+        }
+
+            .input-dang-nhap input {
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                padding: 9px;
+                width: 80%;
+                height: 36px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+        .modal-content {
+            width: 80% !important;
+        }
+
+            .modal-content .modal-footer button {
+                width: 90px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+        a:hover {
+            text-decoration: none !important;
+        }
+
+        .headertop_desc .account_desc a {
+            font-size: 14px;
+            text-decoration: none !important;
+        }
+
+        .col_1_of_4 ul li a {
+            font-size: 14px;
+        }
+
+        .modal-open {
+            padding-right: 0 !important;
+        }
+
+        .custom-dropdown {
+            border: none !important;
+            background-color: #FFF !important;
+        }
+
+        .btn-dropdown {
+            background: white !important;
+            color: black !important;
+            border: none !important;
+        }
+
+        .btn-secondary:focus {
+            box-shadow: none !important;
+        }
+
+        .btn:focus {
+            box-shadow: none !important;
+        }
+
+        .border-none .dropdown .btn-dropdown {
+            color: #9C9C9C !important;
+        }
+
+            .border-none .dropdown .btn-dropdown:hover {
+                color: #E4292F !important;
+            }
+
+        .border-none .dropdown-menu .dropdown-item:active {
+            background: none !important;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <div class="headertop_desc">
+                @{ Html.RenderAction("TopMenu", "Home");}
+            </div>
+            <div class="header_top">
+                <div class="logo">
+                    <a href="/"><img src="~/Content/client/images/1.jpg" width="297" alt="" /></a>
+                </div>
+                @{ Html.RenderAction("HeaderCart", "Home");}
+                <script type="text/javascript">
+                    function DropDown(el) {
+                        this.dd = el;
+                        this.initEvents();
+                    }
+                    DropDown.prototype = {
+                        initEvents: function () {
+                            var obj = this;
+
+                            obj.dd.on('click', function (event) {
+                                $(this).toggleClass('active');
+                                event.stopPropagation();
+                            });
+                        }
+                    }
+
+                    $(function () {
+
+                        var dd = new DropDown($('#dd'));
+
+                        $(document).click(function () {
+                            // all dropdowns
+                            $('.wrapper-dropdown-2').removeClass('active');
+                        });
+
+                    });
+
+                </script>
+                <div class="clear"></div>
+            </div>
+            <div class="header_bottom">
+                @{Html.RenderAction("MainMenu", "Home"); }
+                <div class="search_box">
+                    <form action="/tim-kiem" method="get">
+                        <input type="text" id="txtKeyword" name="keyword" placeholder="Gõ từ khoá"><input type="submit" value="">
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+            @RenderSection("slide", required: false)
+
+        </div>
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="footer">
+        @{ Html.RenderAction("Footer", "Home");}
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+    <script src="/Content/client/js/controller/baseController.js"></script>
+    @RenderSection("jsFooter", required: false)
+</body>
+</html>
+

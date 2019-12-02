@@ -1,0 +1,28 @@
+﻿@model List<Model.EF.Menu>
+    <style>
+        .menu{
+            height:46px;
+        }
+
+        .menu li a{
+            border-right:0;
+            padding: 15px 20px 13px 20px;
+        }
+
+        .menu li a:hover, .menu li:active a{
+            height:46px;
+        }
+    </style>
+    <div class="menu" style="font-family: Arial,Helvetica,sans-serif;">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="@item.Link" @*target="@item.Target"*@>@item.Text</a>
+
+                    </li>
+                }
+                <div class="clear"></div>
+            </ul>    
+        </div>
+    

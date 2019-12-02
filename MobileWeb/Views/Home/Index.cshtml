@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var slides = (List<Model.EF.Slide>)ViewBag.Slides;
+    var listNewProducts = (List<Model.EF.Product>)ViewBag.NewProducts;
+    var listFeatureProducts = (List<Model.EF.Product>)ViewBag.ListFeatureProducts;
+}
+
+<style>
+
+    .images_1_of_4 {
+        transition: all .2s ease-in-out;
+    }
+
+        .images_1_of_4:hover {
+            transform: scale(1.03);
+        }
+
+    .price-discount {
+        font-size: 12px;
+        margin-left: 6px;
+        text-decoration: line-through;
+    }
+
+    .price-number-1 {
+        margin-top: 4px;
+    }
+
+    .images_1_of_4 h2 {
+        font-family: Arial;
+        font-size: 16px;
+        margin-top: 6px;
+        color: black;
+        text-align: center;
+    }
+
+    .price-details {
+        margin-bottom: 2px;
+    }
+
+    .price-details p span.rupees {
+        font-size: 16px;
+        font-family: Arial;
+        color: #e10c00 !important;
+        font-weight: bold;
+    }
+
+    .images_1_of_4 {
+        text-align: left;
+        width: 23.8%!important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .images_1_of_4 p {
+        padding: 0px 0.1px 0.1px 0.1px;
+        margin: 0
+    }
+
+    .images_1_of_4 .mota_sp p {
+        margin-top: 1px;
+        color: #666666;
+        font-size: 12px;
+        font-family: Arial;
+        text-align:left;
+    }
+
+    .images_1_of_4 a:hover h2 {
+        color: #3d8cd8;
+    }
+
+    .content_top, .content_bottom {
+        padding: 0 20px;
+    }
+
+    .content_bottom{
+        margin-top:0.6%!important;
+    }
+
+    .content_top .heading h3, .content_bottom .heading h3 {
+        font-family: Arial;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 15px 0 15px 0;
+    }
+
+    .content_top .see, .content_bottom .see {
+        padding: 0;
+    }
+
+    .content_top .see p, .content_bottom .see p {
+        margin: 15px 0 15px 0;
+    }
+
+    .content_top .see p a, .content_bottom .see p a{
+        padding-top: 3px!important;
+    }
+
+    .header_bottom_left .categories {
+        font-family: Arial;
+        overflow: scroll;
+        max-height: 390px;
+        box-shadow: 0 0 3px rgb(234, 234, 234);
+    }
+
+
+    .header_bottom_left .categories ul li a {
+        font-size: 14px;
+    }
+
+    .content h2 {
+        height: 20px;
+        margin: 15px 0 0 0;
+    }
+
+    .header_bottom_left .categories h3 {
+        margin: 0;
+    }
+
+    #slider {
+        width: 817px;
+        height: 421px;
+        box-shadow: 0 0 3px rgb(234, 234, 234);
+    }
+
+    .span_1_of_4{
+        border-left:0!important;
+    }
+    .footer{
+        margin:0!important;
+    }
+
+    .add-cart h4 a:hover {
+        background: #fd6e1d!important;
+    }
+
+    .images_1_of_4:nth-child(5n) {
+        margin-left: 0 !important;
+    }
+</style>
+
+@section slide
+{
+<div class="header_slide">
+    <div class="header_bottom_left" >
+        <div class="categories">
+             @{ Html.RenderAction("ProductCategory", "Product");}
+        </div>
+    </div>
+    <div class="header_bottom_right">
+        <div class="slider">
+            <div id="slider">
+                <div id="mover">
+                    @foreach (var item in slides)
+                    {
+                        <div class="slide" id="slide-1">
+                            <div class="slider-img">
+                                <a href="@item.Link"><img src="@item.Image" alt="learn more" /></a>
+                            </div>
+                            <div class="slider-text">
+                                <h1>Clearance<br><span>SALE</span></h1>
+                                <h2>UPTo 20% OFF</h2>
+                                <div class="features_list">
+                                    <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>
+                                </div>
+                                <a href="/" class="button">Shop Now</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+    }
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>Sản phẩm mới</h3>
+        </div>
+        <div class="see">
+            <p><a href="/san-pham">Xem tất cả</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in listNewProducts)
+        {
+            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="@url">
+                <img src="@item.Image" alt="@item.Name" />
+                <h2>@item.Name</h2>
+                <div class="price-details">
+                    @if (item.PromotionPrice != 0 && item.PromotionPrice != null)
+                    {
+                        <div class="price-number">
+                            <p><span class="rupees">@(item.PromotionPrice.HasValue ? item.PromotionPrice.Value.ToString("N0") : "Liên hệ")</span></p>
+                        </div>
+                        <div class="price-number price-number-1">
+                            <p><span class="price-discount">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="price-number">
+                            <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                        </div>
+                    }
+                </div>
+                <div class="clear"></div>
+                <div class="mota_sp">
+                    <p>Màn hình: <span>6.5"</span>,<span>Super Retina XDR</span> </p>
+                    <p>HĐH: <span>iOS13</span></p>
+                    <p>CPU: <span>Apple A13 Bionic 6 nhân</span></p>
+                    <p>RAM: <span>4GB</span>,<span>ROM: </span><span>512GB</span></p>
+                    <p>Camera: <span>3 camera 12 MP</span>,<span>Selfie: </span><span>12 MP</span></p>
+                    <p>Pin: <span>3969</span><span>mAh</span></p>
+                </div>
+            </a>
+            <div class="add-cart">
+                <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+            </div>
+        </div>
+        }
+
+
+
+    </div>
+    <div class="content_bottom">
+        <div class="heading">
+            <h3>Sản phẩm hot</h3>
+        </div>
+        <div class="see">
+            <p><a href="/san-pham">Xem tất cả</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        @foreach (var item in listFeatureProducts)
+        {
+            var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="@url">
+                <img src="@item.Image" alt="@item.Name" />
+                <h2>@item.Name</h2>
+                <div class="price-details">
+                    <div class="price-number">
+                        <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                    <div class="price-number">
+                        <p style="padding-top: 3px;"><span class="price-discount">37.990.000₫</span></p>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="mota_sp">
+                    <p>Màn hình: <span>6.5"</span>,<span>Super Retina XDR</span> </p>
+                    <p>HĐH: <span>iOS13</span></p>
+                    <p>CPU: <span>Apple A13 Bionic 6 nhân</span></p>
+                    <p>RAM: <span>4GB</span>,<span>ROM: </span><span>512GB</span></p>
+                    <p>Camera: <span>3 camera 12 MP</span>,<span>Selfie: </span><span>12 MP</span></p>
+                    <p>Pin: <span>3969</span><span>mAh</span></p>
+                </div>
+            </a>
+            <div class="add-cart">
+                <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+            </div>
+        </div>
+        }
+    </div>
+</div>

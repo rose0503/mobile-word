@@ -1,0 +1,323 @@
+﻿@model List<Model.ViewModel.ProductViewModel>
+@{
+    //var category = (Model.EF.ProductCategory)ViewBag.Category;
+    //ViewBag.Title = category.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<style>
+    h1 {
+        color: black;
+        border-bottom-style: solid;
+    }
+
+    .menu_logo {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .menu_logo img {
+            width: 114.58px;
+            border: 1px thin black;
+        }
+
+        .menu_logo div {
+            height: 42px;
+            height: 42px;
+            width: calc(100%/8 - 0.1px);
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    .loc_sp {
+        margin-top: 15px;
+        display: flex;
+    }
+
+        .loc_sp li {
+            display: flex;
+        }
+
+            .loc_sp li div {
+                margin-left: 20px;
+            }
+
+                .loc_sp li div a {
+                    color: #3d8cd8;
+                }
+
+                    .loc_sp li div a:hover {
+                        color: #333;
+                    }
+
+    .heading h3 {
+        font-size: 16px !important;
+        font-weight: bold;
+        font-family: Arial!important;
+        margin-bottom: 0 !important;
+    }
+
+    .images_1_of_4 {
+        transition: all .2s ease-in-out;
+    }
+
+        .images_1_of_4:hover {
+            transform: scale(1.02)
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: #CD1F25;
+                color: white;
+                border-radius: 5px;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+                border-radius: 5px;
+            }
+
+    .price-discount {
+        font-size: 12px;
+        margin-left: 6px;
+        text-decoration: line-through;
+    }
+
+    .images_1_of_4 h2 {
+        font-family: Arial;
+        font-size: 16px;
+        margin-top: 6px;
+        color: black;
+        text-align: center;
+    }
+
+    .price-details {
+        margin-bottom: 2px;
+    }
+
+        .price-details p span.rupees {
+            font-size: 1.3em;
+            font-family: Arial;
+            color: #e10c00 !important;
+            font-weight: bold;
+        }
+
+    .images_1_of_4 {
+        text-align: left;
+        width: 23.8%!important;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .images_1_of_4 p {
+            padding: 0.1px;
+            margin: 0;
+        }
+
+        .images_1_of_4 .mota_sp p {
+            margin-top: 1px;
+            color: #666666;
+            font-size: 12px;
+            font-family: Arial;
+            text-align:left;
+        }
+
+        .images_1_of_4 a:hover h2 {
+            color: #3d8cd8;
+        }
+
+    .mySlides {
+        display: none
+    }
+
+    .w3-left, .w3-right, .w3-badge {
+        cursor: pointer;
+        color: black;
+    }
+
+    .w3-badge {
+        height: 13px;
+        width: 13px;
+        padding: 0
+    }
+
+    .hover-red:hover {
+        background: repeating-radial-gradient(red, transparent 100px);
+    }
+
+    .active-radius {
+        color: black;
+        background: red !important;
+    }
+
+    .content_top {
+        padding: 10px 6px!important;
+        box-shadow: 0 0 2px #666;
+    }
+
+    .add-cart h4 a:hover {
+        background: #fd6e1d !important;
+    }
+
+    .images_1_of_4:nth-child(5n){
+        margin-left:0!important;
+    }
+
+    .price-number-1{
+        margin-top:4px;
+    }
+</style>
+
+
+<div class="menu_logo">
+    <div>
+        <a href="#"><img src="~/Content/client/images/logo_iphone.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Logo_Samsung.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"> <img src="~/Content/client/images/Logo_Huawei.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Logo_OPPO.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Logo_Nokia.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Logo_Vivo.jpg" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Logo_Realme.png" /></a>
+    </div>
+    <div>
+        <a href="#"><img src="~/Content/client/images/Xiaomi42-b_31.png" /></a>
+    </div>
+</div>
+<ul class="loc_sp">
+    <li>
+        <p>Chọn mức giá: </p>
+    </li>
+    <li>
+        <div><a href="#">Dưới 2 triệu</a></div>
+        <div><a href="#">Từ 2 - 4 triệu</a></div>
+        <div><a href="#">Từ 4 - 7 triệu</a></div>
+        <div><a href="#">Từ 7 - 13 triệu</a></div>
+        <div><a href="#">Trên 13 triệu</a></div>
+    </li>
+</ul>
+<div class="content_top" style="margin-top:15px">
+    <div class="heading">
+        <h3>ĐIỆN THOẠI NỔI BẬT</h3>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="section group">
+    @foreach (var item in Model)
+    {
+        var link = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+    <div class="grid_1_of_4 images_1_of_4">
+        <a href="@link">
+            <img src="@item.Image" alt="@item.Name" />
+            <h2>@item.Name</h2>
+            @*<span>@item.CateName</span>*@
+            <div class="price-details">
+                @if (item.PromotionPrice != 0 && item.PromotionPrice!=null)
+                {
+                    <div class="price-number">
+                        <p><span class="rupees">@(item.PromotionPrice.HasValue ? item.PromotionPrice.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                    <div class="price-number price-number-1">
+                        <p><span class="price-discount">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                }
+                else
+                {
+                    <div class="price-number">
+                        <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                }
+
+            </div>
+            <div class="clear"></div>
+            <div class="mota_sp">
+                <p>Màn hình: <span>6.5"</span>,<span>Super Retina XDR</span> </p>
+                <p>HĐH: <span>iOS13</span></p>
+                <p>CPU: <span>Apple A13 Bionic 6 nhân</span></p>
+                <p>RAM: <span>4GB</span>,<span>ROM: </span><span>512GB</span></p>
+                <p>Camera: <span>3 camera 12 MP</span>,<span>Selfie: </span><span>12 MP</span></p>
+                <p>Pin: <span>3969</span><span>mAh</span></p>
+            </div>
+        </a>
+        <div class="add-cart">
+            <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+        </div>
+    </div>
+    }
+    <div class="clear"></div>
+    <!--Phân trang-->
+    @if (ViewBag.TotalPage > 0)
+    {
+        var pageDisplay = (int)ViewBag.MaxPage;
+        int totalPage = (int)ViewBag.TotalPage;
+        int currentPage = ((int)ViewBag.Page);
+
+        // Create numeric links
+        var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+        var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+        var link = "/san-pham/";
+        <nav>
+            <ul class="pagination">
+                @if (currentPage > ViewBag.First)
+                {
+                    <li><a href="@link?page=@ViewBag.First" title="Trang đầu" class="first"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li>
+                        <a href="@link?page=@ViewBag.Prev" title="Trang trước" class="prev"><i class="fa fa-angle-left"></i></a>
+                    </li>
+
+                }
+                @for (int i = startPageIndex; i <= endPageIndex; i++)
+                {
+                    if (currentPage == i)
+                    {
+
+                        <li> <a href="@link?page=@i" class="active" title="Trang @i">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@link?page=@i" title="Trang @i" class="pos">@i</a></li>
+                    }
+                }
+                @if (currentPage < totalPage)
+                {
+                    <li><a href="@link?page=@ViewBag.Next" class="next" title="Trang sau"><i class="fa fa-angle-right"></i></a></li>
+                    <li> <a href="@link?page=@ViewBag.Last" class="last" title="Trang cuối"><i class="fa fa-angle-double-right"></i></a></li>
+                }
+
+            </ul>
+        </nav>
+
+    }
+    else
+    {
+        <span>Không có bản ghi nào</span>
+    }
+</div>

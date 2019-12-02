@@ -1,0 +1,280 @@
+﻿@model List<MobileWeb.Models.CartItem>
+@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial !important;
+        font-size: 14px !important;
+        text-decoration: none !important;
+    }
+
+    .main {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+
+
+
+    }
+
+    .main-trang {
+        width: 800px;
+    }
+
+    .dau_trang {
+        display: flex;
+        font-size: 14px;
+        justify-content: space-between;
+    }
+
+    .sp_khac {
+        display: flex;
+        position: relative;
+        line-height: 15px;
+        font-size: 14px;
+        color: #288ad6;
+        padding: 15px 0 0 20px;
+    }
+
+        .sp_khac::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-right: 7px solid #288ad6;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            position: absolute;
+            left: 0px;
+        }
+
+    .dau_trang .gio_hang {
+        margin-left: 40px;
+        padding: 15px 0 0 20px;
+        line-height: 15px;
+    }
+
+    .khung_donhang {
+        margin-top: 15px;
+        border: 1px solid #f5f5f5;
+        border-radius: 4px;
+        box-shadow: 0 0 10px 10px #e1e1e1;
+        margin-bottom: 10px;
+    }
+
+    .danh-sach-sp {
+        border-bottom: 1px solid #f59000;
+    }
+
+        .danh-sach-sp table {
+            width: 700px;
+            margin: 15px auto;
+            /*text-align:center;*/
+        }
+
+            .danh-sach-sp table th {
+                font-weight: bold;
+            }
+
+            .danh-sach-sp table th, td {
+                border-bottom: 1px solid #e1e1e1;
+                padding: 0px 0 10px 5px;
+                
+            }
+
+            .danh-sach-sp table td img{
+                margin-left: 30px;
+                margin-top: 4px;
+            }
+
+
+    .thong-tin-kh {
+        padding: 15px 20px 0px 20px;
+    }
+
+        .thong-tin-kh input {
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            padding: 9px;
+            height: 36px;
+            margin-bottom: 10px;
+        }
+
+    .nut-bam {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        border-bottom: 1px solid #f59000;
+    }
+
+        .nut-bam button {
+            border: 1px solid #f59000;
+            border-radius: 4px;
+            padding: 8px 0 10px 0;
+            width: 200px;
+            height: 36px;
+            margin: 15px;
+            background: #f59000;
+            color: white;
+        }
+
+    .tong-tien-thanh-toan {
+        display: flex;
+        justify-content: flex-end;
+        align-content: flex-end;
+        margin: 20px 50px 15px 0;
+        font-size: 16px;
+    }
+
+        .tong-tien-thanh-toan .tong-tien {
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .tong-tien-thanh-toan span:last-child {
+            color: #c10017;
+            font-weight: bold;
+        }
+</style>
+@*<div class="content">
+    <div class="section group">
+        @if (Model.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Mã SP</td>
+                        <td>Tên SP</td>
+                        <td>Ảnh SP</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.ID</td>
+                            <td>@item.Product.Name</td>
+                            <td><img src="@item.Product.Image" width="100" /></td>
+                            <td><input type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                            <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                            <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                            <td><a href="#" data-id="@item.Product.ID" class="btn-delete">Xoá</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="section group">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Người nhận</label>
+                    <input name="shipName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Điện thoại</label>
+                    <input name="mobile" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input name="address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" class="form-control" />
+                </div>
+                <button type="submit" class="btn">Gửi đơn hàng</button>
+            }
+        </div>
+
+    </div>
+</div>*@
+
+<body>
+    <div class="main-trang">
+        <div class="dau_trang">
+            <a class="sp_khac" href="#">Quay lại giỏ hàng</a>
+            <div class="gio_hang">Thông tin đơn hàng</div>
+        </div>
+        <div class="khung_donhang" style="background:white">
+            <div class="danh-sach-sp">
+                @if (Model.Count > 0)
+                {
+                    <table>
+                        <tr>
+                            <th>Ảnh sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu</th>
+                            <th>Đơn giá</th>
+                            <th style="width:80px">Số lượng</th>
+                            <th>Giảm giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                        @{decimal? tong = 0;
+                            decimal? thanhtoan = 0; }
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td><img src="@item.Product.Image" width="50" height="50" /></td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Color</td>
+                            @if (@item.Product.PromotionPrice != null && item.Product.PromotionPrice != 0)
+                            {
+                                <td>@item.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")</td>
+                                <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                                <td>0</td>
+                                <td>@((item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                                tong += (item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity);
+                            }
+                            else
+                            {
+                                <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                                <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                                <td>0</td>
+                                <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                                tong += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
+                            }
+                        </tr>
+                            //thanhtoan += tong;
+                        }
+                    </table>
+                        <div class="tong-tien-thanh-toan">
+                            <span class="tong-tien">Tổng tiền cần thanh toán:</span><span>@tong.GetValueOrDefault(0).ToString()</span>
+                        </div>
+                }
+            </div>
+
+            <div>
+                <div style="margin: 15px 0 0 10px; font-weight:bold">Thông tin khách hàng</div>
+                <div class="thong-tin-kh">
+                    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                    {
+                        <input style="width:70%" type="text" placeholder="Họ và tên" name="shipName" maxlength="50" />
+                        <input style="width:29%" type="text" placeholder="Giới tính" />
+                        <input style="width:40%" type="text" placeholder="Số điện thoại" name="mobile" maxlength="10" />
+                        <input style="width:59%" type="email" placeholder="Email"  name="email" />
+                        <input style="width:calc(100% - 2px)" type="text" placeholder="Địa chỉ" name="address" maxlength="1000" />
+
+                        <div class="nut-bam">
+                            <button type="submit" class="btn">Gửi đơn hàng</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>

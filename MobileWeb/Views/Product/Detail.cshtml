@@ -1,0 +1,208 @@
+﻿@model Model.EF.Review
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var review = (List< Model.EF.Review>)ViewBag.review;
+    var product = (Model.EF.Product)ViewBag.product;
+    var category = (Model.EF.ProductCategory)ViewBag.Category;
+    var relatedProducts = (List<Model.EF.Product>)ViewBag.RelatedProducts;
+}
+<link href="~/Content/client/js/jquery.rateyo.min.css" rel="stylesheet" />
+<script src="~/Content/client/js/jquery.min.js"></script>
+<script src="~/Content/client/js/jquery.rateyo.min.js"></script>
+
+<script>
+    $(function () {
+
+        $("#rateYo").rateYo({
+            rating: 0,
+            numStar: 5,
+            maxStar: 5,
+            halfStar: true,
+            onChange: function (rating, rateYoInstance) {
+                $('#rating').val(rating);
+            }
+            
+        });
+    });
+</script >
+<div class="content">
+    <div class="content_top">
+        <div class="back-links" style="float:none">
+            <p><a href="/">Trang chủ</a>>>>><a href="/san-pham/@category.MetaTitle-@category.ID">@category.Name</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="section group">
+        <div class="cont-desc span_1_of_2">
+            <div class="product-details">
+                <div class="grid images_3_of_2">
+                    <div id="container">
+                        <div id="products_example">
+                            <div id="products">
+                                <div class="slides_container">
+                                    <a href="#" target="_blank"><img src="@product.Image" alt=" " /></a>
+                                </div>
+                                @*<ul class="pagination">
+                                <li><a href="#"><img src="images/thumbnailslide-1.jpg" alt=" " /></a></li>
+                                <li><a href="#"><img src="images/thumbnailslide-2.jpg" alt=" " /></a></li>
+                                <li><a href="#"><img src="images/thumbnailslide-3.jpg" alt=" " /></a></li>
+                                <li><a href="#"><img src="images/thumbnailslide-4.jpg" alt=" " /></a></li>
+                                <li><a href="#"><img src="images/thumbnailslide-5.jpg" alt=" " /></a></li>
+                                <li><a href="#"><img src="images/thumbnailslide-6.jpg" alt=" " /></a></li>
+                            </ul>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desc span_3_of_2">
+                    <h2>@product.Name </h2>
+                    <p>@product.Description</p>
+                    <div class="price">
+                        <p>Giá: <span>@(product.Price.HasValue ? product.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                    <div class="share-desc">
+                        <div class="share">
+                            <p>Chia sẻ :</p>
+                            <ul>
+                                <li><a href="#"><img src="/Content/client/images/facebook.png" alt="" /></a></li>
+                                <li><a href="#"><img src="/Content/client/images/twitter.png" alt="" /></a></li>
+                            </ul>
+                        </div>
+                        <div class="button"><span><a href="#">Thêm vào giỏ</a></span></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="wish-list">
+                        <ul>
+                            <li class="wish"><a href="#">Thêm vào yêu thích</a></li>
+                            <li class="compare"><a href="#">So sánh</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="product_desc">
+                <div id="horizontalTab">
+                    <ul class="resp-tabs-list">
+                        <li>Chi tiết</li>
+
+                        <div class="clear"></div>
+                    </ul>
+                    <div class="resp-tabs-container">
+                        <div class="product-desc">
+                            @*@Html.Raw(Model.Detail)*@
+                            @product.Description
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#horizontalTab').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true   // 100% fit in a container
+                    });
+                });
+            </script>
+            <div class="content_bottom">
+                <div class="heading">
+                    <h3>Sản phẩm liên quan</h3>
+                </div>
+                <div class="see">
+                    <p><a href="/san-pham">Xem tất cả</a></p>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="section group">
+                @foreach (var item in relatedProducts)
+                {
+
+                    var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                    <div class="grid_1_of_4 images_1_of_4">
+                        <a href="@url"><img src="@item.Image" alt="@item.Name" /></a>
+                        <h2>@item.Name</h2>
+                        <div class="price-details">
+                            <div class="price-number">
+                                <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                            </div>
+                            <div class="add-cart">
+                                <h4><a href="/them-gio-hang?productId=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="content_bottom">
+                <div class="heading">
+                    <h3>Bình luận</h3>
+                </div>                
+                <div class="clear"></div>
+            </div>
+            <div class="section group">
+                <div class="heading">
+                    <h4>Rating and comments</h4>
+                    
+                    @{
+                        var session = (MobileWeb.Common.UserLogin)Session[MobileWeb.Common.CommonConstants.USER_SESSION];
+                    }
+                    @if (session == null)
+                    {
+                        <span>Hãy đăng nhập để đăng bình luận của bạn</span>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("SendReview", "Product", FormMethod.Post))
+                        {
+                            <table cellpadding="3" cellspacing="3">
+                                <tr>
+                                    <td valign="top">
+                                        Rating
+                                    </td>
+                                    <td>
+                                        <div id="rateYo"></div>
+                                        <input type="hidden" id="rating" name="rating" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        Content
+                                    </td>
+                                    <td>@Html.TextAreaFor(model => model.Content, new { cols = 20, row = 5 })</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <input type="submit" value="Send" class="btn btn-default" />
+                                        @Html.HiddenFor(model => model.ProductId)
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    }
+                    <table border="1" cellpadding="2" cellspacing="2">
+                        @foreach (var item in review)
+                        {
+                            <tr>
+                                <td valign="top">
+                                    @item.Rating
+                                    <br />
+                                    @item.Content
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="rightsidebar span_3_of_1">
+            @{ Html.RenderAction("ProductCategory", "Product");}
+            
+
+        </div>
+       
+    </div>
+</div>
