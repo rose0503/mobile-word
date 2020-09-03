@@ -37,7 +37,7 @@ namespace MobileWeb.Controllers
         }
         public ActionResult Category(long cateId, int page = 1, int pageSize = 1)
         {
-            var category = new CategoryDao().ViewDetail(cateId);
+            var category = new ProductCategoryDao().ViewDetail(cateId);
             ViewBag.Category = category;
             int totalRecord = 0;
             var model = new ProductDao().ListByCategoryId(cateId, ref totalRecord, page, pageSize);
@@ -110,24 +110,23 @@ namespace MobileWeb.Controllers
         {
             var product = new ProductDao().ViewDetail(id);
             ViewBag.product = new ProductDao().ViewDetail(id);
-            ViewBag.review = new ProductDao().ViewDetail(id);
+            var review = new ReviewDao().ListReview(id);
+            ViewBag.review = review;  
             ViewBag.Category = new ProductCategoryDao().ViewDetail(product.CategoryID.Value);
             ViewBag.RelatedProducts = new ProductDao().ListRelatedProducts(id);
-            var review = new Review()
-            {
-                ProductId = product.ID
-            };
-            return View("Detail", review);
+            
+            return View("Detail",review);
         }
 
 
         [HttpPost]
-        public ActionResult SendReview(Review review, float rating)
+        public ActionResult SendReview(Review review, decimal rating)
         {
             MobileDbContext db = new MobileDbContext();
-            string session = Session[USER_SESSION].ToString();
+            var session = (MobileWeb.Common.UserLogin)Session[USER_SESSION];
             review.DatePost = DateTime.Now;
-            //review.UserId = db.User.Single(a => a.UserName.Equals(session)).ID;
+            review.ProductId = 
+            review.UserId = session.UserID;
             review.Rating = rating;
             db.Review.Add(review);
             db.SaveChanges();

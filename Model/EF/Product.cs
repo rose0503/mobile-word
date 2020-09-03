@@ -27,6 +27,7 @@
         [StringLength(1000, MinimumLength = 20, ErrorMessage = "Độ dài mật khẩu ít nhất 10 ký tự.")]        
         public string Description { get; set; }
 
+        [DataType(DataType.Upload)]
         [Display(Name = "Hình ảnh")]
         [Required(ErrorMessage = "Yêu cầu chọn hình sản phẩm.")]
         [StringLength(140)]

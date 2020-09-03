@@ -1,0 +1,106 @@
+﻿@model Model.EF.Order
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Hủy đơn</h2>
+
+<h3>Bạn đã chắc khi hủy đơn này chưa??</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        @if(ViewBag.Success != null)
+        {
+        <div class="alert alert-success">@ViewBag.Success</div>
+        }
+        else
+        {
+        <div class="alert alert-warning">@ViewBag.Fail</div>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipMobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipMobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        @{ if (Model.Status == 1)
+            {
+                <dd> Đang chờ xác nhận</dd>
+            }
+            else if (Model.Status == 2)
+            {
+                <dd> Đã xác nhận</dd>
+            }
+            else if (Model.Status == 3)
+            {
+                <dd> Đang trong quá trình giao hàng</dd>
+            }
+            else if (Model.Status == 4)
+            {
+                <dd> Hoàn thành</dd>
+            }
+            else if (Model.Status == 5)
+            {
+                <dd> Đã hủy bởi bạn</dd>
+            }
+            else
+            {
+                <dd> Đã hủy bởi hệ thống</dd>
+            }
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Order", FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+         
+        
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+        
+    }
+</div>

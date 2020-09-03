@@ -231,54 +231,76 @@
                             decimal? thanhtoan = 0; }
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td><img src="@item.Product.Image" width="50" height="50" /></td>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Product.Color</td>
-                            @if (@item.Product.PromotionPrice != null && item.Product.PromotionPrice != 0)
-                            {
-                                <td>@item.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")</td>
-                                <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
-                                <td>0</td>
-                                <td>@((item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
-                                tong += (item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity);
-                            }
-                            else
-                            {
-                                <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
-                                <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
-                                <td>0</td>
-                                <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
-                                tong += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
-                            }
-                        </tr>
+                            <tr>
+                                <td><img src="@item.Product.Image" width="50" height="50" /></td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Color</td>
+                                @if (@item.Product.PromotionPrice != null && item.Product.PromotionPrice != 0)
+                                {
+                                    <td>@item.Product.PromotionPrice.GetValueOrDefault(0).ToString("N0")</td>
+                                    <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                                    <td>0</td>
+                                    <td>@((item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                                    tong += (item.Product.PromotionPrice.GetValueOrDefault(0) * item.Quantity);
+                                }
+                                else
+                                {
+                                    <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
+                                    <td><input style="width:50px" type="text" class="txtQuantity" data-id="@item.Product.ID" value="@item.Quantity" /></td>
+                                    <td>0</td>
+                                    <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quantity).ToString("N0"))</td>
+                                    tong += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
+                                }
+                            </tr>
                             //thanhtoan += tong;
                         }
                     </table>
-                        <div class="tong-tien-thanh-toan">
-                            <span class="tong-tien">Tổng tiền cần thanh toán:</span><span>@tong.GetValueOrDefault(0).ToString()</span>
-                        </div>
+                    <div class="tong-tien-thanh-toan">
+                        <span class="tong-tien">Tổng tiền cần thanh toán:</span><span>@tong.GetValueOrDefault(0).ToString()</span>
+                    </div>
                 }
             </div>
 
             <div>
-                <div style="margin: 15px 0 0 10px; font-weight:bold">Thông tin khách hàng</div>
-                <div class="thong-tin-kh">
-                    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
-                    {
-                        <input style="width:70%" type="text" placeholder="Họ và tên" name="shipName" maxlength="50" />
-                        <input style="width:29%" type="text" placeholder="Giới tính" />
-                        <input style="width:40%" type="text" placeholder="Số điện thoại" name="mobile" maxlength="10" />
-                        <input style="width:59%" type="email" placeholder="Email"  name="email" />
-                        <input style="width:calc(100% - 2px)" type="text" placeholder="Địa chỉ" name="address" maxlength="1000" />
 
-                        <div class="nut-bam">
-                            <button type="submit" class="btn">Gửi đơn hàng</button>
-                        </div>
-                    }
-                </div>
+                @{
+                    var session = (MobileWeb.Common.UserLogin)Session[MobileWeb.Common.CommonConstants.USER_SESSION];
+                }
+                @if (session == null)
+                {
+                    <p style="justify-content">Vui lòng <strong><a href="/User/Login" style="color:dodgerblue">đăng nhập<a></strong> để tiếp tục</p>
+                }
+                else
+                {
+                    <div style="margin: 15px 0 0 10px; font-weight:bold">Thông tin khách hàng</div>
+                    <div class="thong-tin-kh">
+                        @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                        {
+
+                            <input style="width:70%" type="text" placeholder="Họ và tên" name="shipName" value="@session.UserName" maxlength="50" />
+                            <input style="width:29%" type="text" placeholder="Giới tính" />
+                            <input style="width:40%" type="text" placeholder="Số điện thoại" name="mobile" value="@session.Phone" maxlength="20" />
+                            <input style="width:59%" type="email" placeholder="Email" name="email" value="@session.Email" />
+                            <input style="width:calc(100% - 2px)" type="text" placeholder="Địa chỉ" name="address" maxlength="1000" />
+
+                            <div class="nut-bam">
+                                <button type="submit" class="btn">Gửi đơn hàng</button>
+                            </div>
+
+                        }
+                            <a href="/Cart/PaymentWithPaypal">Thanh Toán PAYPAL</a>
+                        @*@using (Html.BeginForm("PaymentWithPaypal", "Cart", FormMethod.Get))
+                        {
+                            <div class="nut-bam">
+                                <button type="submit" class="btn">Thanh Toán PAYPAL</button>
+                            </div>
+                        }*@
+                    </div>
+
+                }
             </div>
-            
-        </div>
+
+
+            </div>
     </div>
 </body>

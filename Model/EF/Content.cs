@@ -1,4 +1,4 @@
-namespace Model.EF
+﻿namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -12,6 +12,7 @@ namespace Model.EF
         public long ID { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Vui lòng nhập tên tin tức")]
         public string Name { get; set; }
 
         [StringLength(250)]
@@ -44,7 +45,7 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         public DateTime? TopHot { get; set; }
 

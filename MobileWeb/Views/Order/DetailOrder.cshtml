@@ -1,0 +1,343 @@
+﻿@model Model.EF.Order
+@{
+    var cartProducts = (List<Model.ViewModel.CartDetailView>)ViewBag.CartProducts;
+    }
+@{
+    ViewBag.Title = "Index_User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-size: 14px !important;
+        font-family: Arial;
+        text-decoration: none !important;
+    }
+
+    .phan-trang {
+        display: flex;
+        margin: 15px 10px
+    }
+
+    .nav-muc-luc {
+        width: 15%;
+        margin-right: 20px;
+    }
+
+    .tab-content {
+        width: 80%;
+    }
+
+    .cau-gioi-thieu {
+        padding: 5px;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        border-radius: 4px;
+        height: 30.8px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .cau-gioi-thieu span:first-child {
+            margin-right: 5px;
+        }
+
+        .cau-gioi-thieu span:last-child {
+            font-weight: bold;
+            color: #ec1933;
+        }
+
+    .thong-tin-user {
+        margin-top: 10px;
+    }
+
+        .thong-tin-user div:first-child {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .thong-tin-user table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #e8e8e8;
+            width: 900px;
+            font-size: 14px;
+            box-shadow: 0 0 4px #e8e8e8;
+        }
+
+    table td, th {
+        font-size: 12px;
+    }
+
+    .thong-tin-user table td, th {
+        border: 1px solid #e8e8e8;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+    .table-striped > tbody > tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .row-cap-nhat-user {
+        display: grid;
+        grid-template-columns: 60% 43.5%;
+    }
+
+    .thong-tin-user .table2 {
+        width: 100%;
+    }
+
+        .thong-tin-user .table2 td input {
+            width: 100%;
+            height: 100%;
+        }
+
+    .cot-doi-pass {
+        margin-left: 10px;
+    }
+
+    .thong-tin-user .table3 {
+        width: 100%;
+    }
+
+    .nut-bam {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        border-bottom: 1px solid #f59000;
+    }
+
+        .nut-bam button {
+            border: 1px solid #f59000;
+            border-radius: 4px;
+            padding: 5px 0 10px 0;
+            width: 200px;
+            height: 36px;
+            margin: 15px;
+            background: #f59000;
+            color: white;
+        }
+
+    .thong-tin-don-hang .table4 {
+        margin-top: 10px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        font-size: 14px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .thong-tin-don-hang .table4 th, td {
+            border: 1px solid #e8e8e8;
+            text-align: left;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .thong-tin-don-hang .table4 .tieu-de-bang {
+            text-align: center;
+            font-weight: bold;
+            background-color: #adafb1;
+        }
+
+    .thong-tin-don-hang .table-sp {
+        width: 100%;
+    }
+
+        .thong-tin-don-hang .table-sp th {
+            background: #e8e8e8;
+        }
+</style>
+
+<body>
+    @{
+        var session = (MobileWeb.Common.UserLogin)Session[MobileWeb.Common.CommonConstants.USER_SESSION];
+    }
+    @if (session != null)
+    {
+        decimal? tong = 0;
+        decimal? thanhtoan = 0;
+
+            <div class="phan-trang">
+                <div class="nav flex-column nav-pills nav-muc-luc" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" data-toggle="pill" href="#v-pills-profile" aria-controls="v-pills-profile" aria-selected="true">Đơn hàng của tôi</a>
+                    <a class="nav-link " href="/Order/Index">Quay lại </a>
+                    
+                </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                    
+                    
+                    <div class="tab-pane fade" id="v-pills-profile"  aria-labelledby="v-pills-profile-tab">
+                        <div class="cau-gioi-thieu"><span>Thông tin hóa đơn số:</span><span>@Model.ID</span></div>
+                        <div class="thong-tin-don-hang ">
+                            <table class="table4">
+                                <tbody>
+                                    <tr>
+                                        <th class="tieu-de-bang" colspan="4">Thông tin chung</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Ngày gửi yêu cầu</th>
+                                        <td>@Model.CreateDate</td>
+                                        @*<th>Tổng số tiền</th>
+                                        <td>@tong.GetValueOrDefault(0).ToString()</td>*@
+                                    </tr>
+                                    <tr>
+                                        <th>Hình thức thanh toán</th>
+                                        <td>Thanh toán khi nhận hàng</td>
+                                        <th>Trạng thái thanh toán</th>
+                                        @{ if (@Model.Status == 1)
+                                            {
+                                                <td> Đang chờ xác nhận</td>
+                                            }
+                                            else if (@Model.Status == 2)
+                                            {
+                                                <td> Đã xác nhận</td>
+                                            }
+                                            else if (@Model.Status == 3)
+                                            {
+                                                <td> Đang trong quá trình giao hàng</td>
+                                            }
+                                            else if (@Model.Status == 4)
+                                            {
+                                                <td> Hoàn thành</td>
+                                            }
+                                            else if (@Model.Status == 5)
+                                            {
+                                                <td> Đã hủy bởi bạn</td>
+                                            }
+                                            else
+                                            {
+                                                <td> Đã hủy bởi hệ thống</td>
+                                            }
+
+
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th class="tieu-de-bang" colspan="4">Thông tin nơi nhận hàng</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Họ tên người nhận</th>
+                                        <td colspan="3">@Model.ShipName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số điện thoại</th>
+                                        <td>@Model.ShipMobile</td>
+                                        <th>Email</th>
+                                        <td>@Model.ShipEmail</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Địa chỉ</th>
+                                        <td colspan="3">@Model.ShipAddress</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="tieu-de-bang" colspan="4">Sản phẩm đặt hàng</th>
+                                    </tr>
+                                    @{
+                                        foreach (var item in cartProducts)
+                                        {
+                                            if (Model.ID == item.OrderID)
+                                            {
+                                                <tr>
+                                                    <th colspan="4">
+                                                        <table class="table-sp">
+                                                            <tr>
+                                                                <th>Tên sản phẩm</th>
+                                                                <th>Màu</th>
+                                                                <th>Đơn giá</th>
+                                                                <th>Số lượng</th>
+                                                                <th>Thành tiền</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.Color</td>
+                                                                @if (@item.PromotionPrice != null && item.PromotionPrice != 0)
+                                                                {
+                                                                    <td>@item.PromotionPrice.GetValueOrDefault(0).ToString("N0")</td>
+                                                                   
+                                                                    <td>@item.Quantity</td>
+                                                                    <td>@((item.Price.GetValueOrDefault(0) * item.Quantity))</td>
+                                                                    tong += (item.PromotionPrice.GetValueOrDefault(0) * item.Quantity);
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@item.Price.GetValueOrDefault(0).ToString("N0")</td>
+                                                                    
+                                                                    <td>@item.Quantity</td>
+                                                                    <td>@((item.Price.GetValueOrDefault(0) * item.Quantity))</td>
+                                                                    tong += (item.Price.GetValueOrDefault(0) * item.Quantity);
+                                                                }
+
+
+                                                            </tr>
+
+                                                        </table>
+                                                    </th>
+                                                </tr>
+                                            }
+                                        } }
+                                    <tr>
+                                        <td colspan="5" class="cau-gioi-thieu"><span>Tổng số tiền:</span><span>@tong.GetValueOrDefault(0).ToString()</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="tieu-de-bang" colspan="4">Nhật ký giao dịch</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">
+                                            <table class="table-sp">
+                                                <tr>
+                                                    <th>Ngày gửi</th>
+                                                    <th>Người gửi</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Ghi chú</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Model.CreateDate</td>
+                                                    <td>@Model.ShipName</td>
+                                                    @{ if (@Model.Status == 1)
+                                                        {
+                                                            <td> Đang chờ xác nhận</td>
+                                                        }
+                                                        else if (@Model.Status == 2)
+                                                        {
+                                                            <td> Đã xác nhận</td>
+                                                        }
+                                                        else if (@Model.Status == 3)
+                                                        {
+                                                            <td> Đang trong quá trình giao hàng</td>
+                                                        }
+                                                        else if (@Model.Status == 4)
+                                                        {
+                                                            <td> Hoàn thành</td>
+                                                        }
+                                                        else if (@Model.Status == 5)
+                                                        {
+                                                            <td> Đã hủy bởi bạn</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td> Đã hủy bởi hệ thống</td>
+                                                        }
+
+
+                                                    }
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                                                        
+                </div>
+            </div>
+                                                        
+}
+
+
+    </body>
+

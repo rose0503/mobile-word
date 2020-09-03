@@ -1,0 +1,313 @@
+﻿@model Model.EF.User
+
+@{
+    ViewBag.Title = "Chỉnh sửa thong tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-size: 14px !important;
+        font-family: Arial;
+        text-decoration: none !important;
+    }
+
+    .phan-trang {
+        display: flex;
+        margin: 15px 10px
+    }
+
+    .nav-muc-luc {
+        width: 15%;
+        margin-right: 20px;
+    }
+
+    .tab-content {
+        width: 80%;
+    }
+
+    .cau-gioi-thieu {
+        padding: 5px;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        border-radius: 4px;
+        height: 30.8px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .cau-gioi-thieu span:first-child {
+            margin-right: 5px;
+        }
+
+        .cau-gioi-thieu span:last-child {
+            font-weight: bold;
+            color: #ec1933;
+        }
+
+    .thong-tin-user {
+        margin-top: 10px;
+    }
+
+        .thong-tin-user div:first-child {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .thong-tin-user table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #e8e8e8;
+            width: 900px;
+            font-size: 14px;
+            box-shadow: 0 0 4px #e8e8e8;
+        }
+
+    table td, th {
+        font-size: 12px;
+    }
+
+    .thong-tin-user table td, th {
+        border: 1px solid #e8e8e8;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+    .table-striped > tbody > tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .row-cap-nhat-user {
+        display: grid;
+        grid-template-columns: 60% 43.5%;
+    }
+
+    .thong-tin-user .table2 {
+        width: 100%;
+    }
+
+        .thong-tin-user .table2 td input {
+            width: 100%;
+            height: 100%;
+        }
+
+    .cot-doi-pass {
+        margin-left: 10px;
+    }
+
+    .thong-tin-user .table3 {
+        width: 100%;
+    }
+
+    .nut-bam {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        border-bottom: 1px solid #f59000;
+    }
+
+        .nut-bam button {
+            border: 1px solid #f59000;
+            border-radius: 4px;
+            padding: 5px 0 10px 0;
+            width: 200px;
+            height: 36px;
+            margin: 15px;
+            background: #f59000;
+            color: white;
+        }
+
+    .thong-tin-don-hang .table4 {
+        margin-top: 10px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        font-size: 14px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .thong-tin-don-hang .table4 th, td {
+            border: 1px solid #e8e8e8;
+            text-align: left;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .thong-tin-don-hang .table4 .tieu-de-bang {
+            text-align: center;
+            font-weight: bold;
+            background-color: #adafb1;
+        }
+
+    .thong-tin-don-hang .table-sp {
+        width: 100%;
+    }
+
+        .thong-tin-don-hang .table-sp th {
+            background: #e8e8e8;
+        }
+</style>
+
+<body>
+    <div class="phan-trang">
+        <div class="nav flex-column nav-pills nav-muc-luc" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" href="/User/Edit/@Model.ID">Thông tin tài khoản</a>
+            <a class="nav-link " href="/Order/Index">Danh sách đơn của bạn</a>
+            <a class="nav-link " href="/Order/IndexFinish">Đơn hàng thành công</a>
+            <a class="nav-link " href="/Order/IndexCancel">Đơn hàng đã hủy</a>
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="cau-gioi-thieu"><span>Xin chào</span><span>@Model.Name</span></div>
+                <div class="thong-tin-user">
+                    <div>Thông tin tài khoản</div>
+                    <table class="table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Tài khoản</th>
+                                <td colspan="3">@Model.UserName</td>
+                            </tr>
+                            <tr>
+                                <th>Họ tên</th>
+                                <td>@Model.Name</td>
+                                <th>Giới tính</th>
+                                <td>Nam/Nữ</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ</th>
+                                <td colspan="3">@Model.Address</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>@Model.Phone</td>
+                                <th>Email</th>
+                                <td>@Model.Email</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="thong-tin-user">
+                    <div class="row-cap-nhat-user">
+                        <div>
+                            <div>Cập nhật thông tin cá nhân</div>
+                            <table class="table-striped table3">
+                                @*<tbody>
+            <tr>
+                <th>Họ tên</th>
+                <td><input /></td>
+            </tr>
+            <tr>
+                <th>Giới tính</th>
+                <td><input /></td>
+            </tr>
+            <tr>
+                <th>Địa chỉ</th>
+                <td colspan="3"><input /></td>
+            </tr>
+            <tr>
+                <th>Số điện thoại</th>
+                <td><input /></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input /></td>
+            </tr>
+        </tbody>*@
+                                
+                                    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                            @if (ViewBag.Success != null)
+                                            {
+                                                <div class="alert alert-success">@ViewBag.Success</div>
+                                            }
+                                        </div>
+                                        @Html.HiddenFor(model => model.ID)
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group nut-bam">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                @*<input type="submit" value="Save" class="btn btn-default" />*@
+                                                <button type="submit" value="Save">Cập nhật thông tin</button>
+                                            </div>
+                                        </div>
+                                        @*<div class="nut-bam">
+                                            <button type="submit" value="Save" >Cập nhật thông tin</button>
+                                        </div>*@
+
+                                    </div>
+                                    }
+
+                                
+                            </table>
+                            
+                        </div>
+                        <div class="cot-doi-pass">
+                            <div>Đổi mật khẩu</div>
+                            <table class="table-striped table2">
+                                <tbody>
+                                    <tr>
+                                        <th>Mật khẩu hiện tại</th>
+                                        <td><input /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mật khẩu mới</th>
+                                        <td><input /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nhập lại mật khẩu mới</th>
+                                        <td><input /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="nut-bam">
+                                <button>Đổi mật khẩu</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+                </div></body>

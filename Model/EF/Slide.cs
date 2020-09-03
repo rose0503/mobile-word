@@ -1,4 +1,4 @@
-namespace Model.EF
+﻿namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace Model.EF
     public partial class Slide
     {
         public int ID { get; set; }
-
-        [StringLength(50)]
+        [Required(ErrorMessage = "Yêu cầu chon hình")]
+        [StringLength(150)]
         public string Image { get; set; }
 
         public int? DisplayOrder { get; set; }
@@ -19,7 +19,7 @@ namespace Model.EF
         [StringLength(50)]
         public string Link { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         public DateTime? CreateDate { get; set; }
 

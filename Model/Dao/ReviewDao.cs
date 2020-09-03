@@ -17,7 +17,8 @@ namespace Model.Dao
         public List<Review> ListReview(long reviewId)
         {
             var r = db.Review.Find(reviewId);
-            return db.Review.ToList();
+            List<Review> model = db.Review.Where(x => x.ProductId == reviewId).OrderByDescending(x => x.DatePost).ToList();
+            return model;
         }
 
     }

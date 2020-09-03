@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace MobileWeb.Controllers
 {
@@ -128,6 +129,7 @@ namespace MobileWeb.Controllers
         }
         public ActionResult Logout()
         {
+            Session[CommonConstants.CartSession] = null;
             Session[CommonConstants.USER_SESSION] = null;
             return Redirect("/");
         }
@@ -187,6 +189,47 @@ namespace MobileWeb.Controllers
                 }
             }
             return Redirect("/");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(long id)
+        {
+            //HttpSessionState ss = HttpContext.Current.Session;
+            //HttpContext.Current.Session["test"] = "test";
+            //UserLogin session = (MobileWeb.Common.UserLogin)Session[MobileWeb.Common.CommonConstants.USER_SESSION];
+
+            //id = session.UserID ;
+            
+            //HttpContext context = HttpContext.CurrentHandler.ProcessRequest.Session
+            //var session = HttpContext.CurrentHandler.ProcessRequest.session;
+             var user = new UserDao().ViewDetail(id);
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult Edit(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+                //if (!string.IsNullOrEmpty(user.Password))
+                //{
+                //    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                //    user.Password = encryptedMd5Pas;
+                //}
+                user.ModifiedDate = DateTime.Now;
+
+                var result = dao.Update(user);
+                if (result)
+                {
+                    ViewBag.Success = "Cập nhật thành công";
+                    //return RedirectToAction("/");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhật user không thành công");
+                }
+            }
+            return View("Edit",user);
         }
     }
 }

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var review = (List< Model.EF.Review>)ViewBag.review;
+    var review = (List<Model.EF.Review>)ViewBag.review;
     var product = (Model.EF.Product)ViewBag.product;
     var category = (Model.EF.ProductCategory)ViewBag.Category;
     var relatedProducts = (List<Model.EF.Product>)ViewBag.RelatedProducts;
@@ -135,7 +135,7 @@
                 }
 
             </div>
-            <div class="content_bottom">
+            @*<div class="content_bottom">
                 <div class="heading">
                     <h3>Bình luận</h3>
                 </div>                
@@ -185,18 +185,28 @@
                     <table border="1" cellpadding="2" cellspacing="2">
                         @foreach (var item in review)
                         {
-                            <tr>
-                                <td valign="top">
-                                    @item.Rating
-                                    <br />
-                                    @item.Content
-                                </td>
-                            </tr>
+                        <tr>
+                            if(@item.Rating == null){
+                            <td valign="top">
+                                không có sao
+                            </td>
+                            }
+                            else{
+                            
+                            <td valign="top">
+                                @item.Rating
+                            </td>
+                            }
+
+                            <td>
+                            @item.Content
+                            </td>
+                        </tr>
                         }
 
                     </table>
                 </div>
-            </div>
+            </div>*@
         </div>
         <div class="rightsidebar span_3_of_1">
             @{ Html.RenderAction("ProductCategory", "Product");}

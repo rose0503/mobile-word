@@ -1,7 +1,9 @@
 ﻿using Common;
+using MobileWeb.Common;
 using MobileWeb.Models;
 using Model.Dao;
 using Model.EF;
+using PayPal.Api;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,6 +17,8 @@ namespace MobileWeb.Controllers
     public class CartController : Controller
     {
         private const string CartSession = "CartSession";
+
+        public const string USER_SESSION = "USER_SESSION";
         // GET: Cart
         public ActionResult Index()
         {
@@ -124,13 +128,16 @@ namespace MobileWeb.Controllers
         [HttpPost]
         public ActionResult Payment(string shipName, string mobile, string address, string email)
         {
-            var order = new Order();
+            var session = (MobileWeb.Common.UserLogin)Session[USER_SESSION];
+            var order = new Model.EF.Order();
             order.CreateDate = DateTime.Now;
-            order.ShipAddress = address;
-            order.ShipMobile = mobile;
-            order.ShipName = shipName;
-            order.ShipEmail = email;
+            order.ShipAddress = address ;
+            order.ShipMobile = mobile ;
+            order.ShipName = shipName ;
+            order.ShipEmail = email ;
 
+            order.Status = 1;
+            order.CustomerID = session.UserID;
             try
             {
                 var id = new OrderDao().Insert(order);
@@ -159,18 +166,131 @@ namespace MobileWeb.Controllers
 
                 new MailHelper().SendMail(email, "Đơn hàng mới từ cửa hàng điện thoại MobileWord", content);
                 new MailHelper().SendMail(toEmail, "Đơn hàng mới từ cửa hàng điện thoại MobileWord", content);
+
+
             }
             catch (Exception ex)
             {
                 //ghi log
-                return Redirect("/loi-thanh-toan");
+                return View("Failure");
             }
-            return Redirect("/hoan-thanh");
+            Session[CartSession] = null;
+            return RedirectToAction("Index","Order");
+
         }
 
         public ActionResult Success()
         {
             return View();
+        }
+
+        private Payment payment;
+
+        private Payment CreatePayment(APIContext apiContext, string redirecUrl)
+        {
+            var listItems = new ItemList() { items = new List<Item>() };
+
+            List<CartItem> listCarts = (List<CartItem>)Session[CartSession];
+            foreach (var cart in listCarts)
+            {
+                listItems.items.Add(new Item()
+                {
+                    name = cart.Product.Name,
+                    currency = "USD",
+                    price = cart.Product.Price.ToString(),
+                    quantity = cart.ToString(),
+                    sku = "sku",
+                });
+            }
+            var payer = new Payer() { payment_method = "paypal" };
+
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirecUrl,
+                return_url = redirecUrl
+            };
+            var details = new Details()
+            {
+                //tax = "1",
+                //shipping = "2",
+                subtotal = listCarts.Sum(x => x.Quantity * x.Product.Price).ToString(),
+            };
+
+            var amount = new Amount()
+            {
+                currency = "USD",
+                total = Convert.ToDouble(details.subtotal).ToString(),//(Convert.ToDouble(details.tax) + Convert.ToDouble(details.shipping) +
+                details = details
+            };
+            var transactionList = new List<Transaction>();
+            transactionList.Add(new Transaction()
+            {
+                description = "Quoc Viet kiem tra giao dich",
+                invoice_number = Convert.ToString((new Random()).Next(100000)),
+                amount = amount,
+                item_list = listItems,
+            });
+            payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls,
+            };
+            return payment.Create(apiContext);
+        }
+
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution()
+            {
+                payer_id = payerId
+            };
+            payment = new Payment() { id = paymentId };
+            return payment.Execute(apiContext, paymentExecution);
+        }
+
+        public ActionResult PaymentWithPaypal()
+        {
+            APIContext apiContext = PayPalConfiguration.GetAPIContext();
+            try
+            {
+                string payerId = Request.Params["PayerID"];
+                if (string.IsNullOrEmpty(payerId))
+                {
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/thanh-toan/PaymentWithPaypal?";
+                    var guid = Convert.ToString((new Random()).Next(100000));
+                    var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    var links = createdPayment.links.GetEnumerator();
+                    string paypalRedirectUrl = string.Empty;
+                    while (links.MoveNext())
+                    {
+                        Links link = links.Current;
+                        if (link.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            paypalRedirectUrl = link.href;
+                        } 
+
+                    }
+                    Session.Add(guid, createdPayment.id);
+                    return Redirect(paypalRedirectUrl);
+                }
+                else
+                {
+                    var guid = Request.Params["guid"];
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                    if(executedPayment.state.ToLower()!= "approved")
+                    {
+                        return View("Failure");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                //PaypalLogger.Log("Error: " + ex.Message);
+                return View("Failure");
+            }
+            return View("Success");
         }
 
     }

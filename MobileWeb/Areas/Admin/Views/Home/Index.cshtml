@@ -1,10 +1,69 @@
-﻿
+﻿@model IEnumerable<Model.ViewModel.CartDetailView>
+
+@*@model PagedList.IPagedList<Model.EF.Order>
+    @using PagedList.Mvc;*@
 @{
-    ViewBag.Title = "Trang chủ";
+    ViewBag.Title = "Thống kê doanh số";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
 @section header{
-    Trang chủ
+    Thống kê
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#IssueDate').datepicker({
+            dateFormat: "dd/MM/yyyy",
+            showStatus: true,
+            showWeeks: true,
+            currentText: 'Now',
+            autoSize: true,
+            gotoCurrent: true,
+            showAnim: 'blind',
+            highlightWeek: true
+        });
+    });
+</script>
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <fieldset>
+        <legend>Search </legend>
+        @Html.Label("startdate", "Start Date:")
+        <input class="startdate" id="startdate" name="startdate" type="date"  value="@DateTime.Now">
+        @Html.Label("enddate", "End Date:")
+        <input class="startdate" id="enddate" name="enddate" type="date"  value="">
+        <input type="submit" name="submit" value="Apply" />
+    </fieldset>
 }
 
+
+<table class="table">
+    <tr>
+        <th>Mã đơn</th>
+        <th>Ngày đặt</th>
+        <th>Tên KH</th>
+        <th>Số lượng sp</th>
+        <th>Tổng đơn</th>
+        <th>Action</th>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.OrderID)</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+
+        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+        <td>@Html.DisplayFor(modelItem => item.PriceToTal)</td>
+        <td>@item.Status</td>
+    </tr>
+    }
+
+</table>

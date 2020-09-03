@@ -14,4 +14,12 @@ CKFinder.customConfig = function( config )
 	// config.language = 'fr';
 	// config.removePlugins = 'basket';
 
+    config.filebrowserBrowseUrl = '/Content/admin/js/plugins/ckfinder/ckfinder.html';
+    config.filebrowserImageBrowseUrl = '/Content/admin/js/plugins/ckfinder.html?Type=Images';
+    config.filebrowserFlashBrowseUrl = '/Content/admin/js/plugins/ckfinder.html?Type=Flash';
+    config.filebrowserUploadUrl = '/Content/admin/js/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files';
+    config.filebrowserImageUploadUrl = '/Data';
+    config.filebrowserFlashUploadUrl = '/Content/admin/js/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
+
+
 };

@@ -16,3 +16,15 @@ C:\Users\trinhquocviet\Desktop\MobileWeb\MobileWeb\Common\obj\Debug\Common.cspro
 C:\Users\trinhquocviet\Desktop\MobileWeb\MobileWeb\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Users\trinhquocviet\Desktop\MobileWeb\MobileWeb\Common\obj\Debug\Common.dll
 C:\Users\trinhquocviet\Desktop\MobileWeb\MobileWeb\Common\obj\Debug\Common.pdb
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\bin\Debug\Common.dll
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\bin\Debug\Common.pdb
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\obj\Debug\Common.dll
+C:\Users\trinhquocviet\Desktop\New folder (3)\Common\obj\Debug\Common.pdb
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\bin\Debug\Common.dll
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\bin\Debug\Common.pdb
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\obj\Debug\Common.csprojAssemblyReference.cache
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\obj\Debug\Common.dll
+D:\Users\trinhquocviet\Desktop\4.HK 1\ECommerce\MobileWordVFinal\Common\obj\Debug\Common.pdb

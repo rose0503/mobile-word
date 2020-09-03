@@ -2,6 +2,7 @@
 using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,11 +32,12 @@ namespace MobileWeb.Areas.Admin.Controllers
                
 
         [HttpPost]
-        //[ValidateInput(false)]
-        public ActionResult Create(Product model)
-        {
+        [ValidateInput(false)]
+        public ActionResult Create(Product model, HttpPostedFileBase fileUpload)
+        {            
             if (ModelState.IsValid)
-            {
+            {             
+
                 var dao = new ProductDao();
                 if (dao.CheckProductName(model.Name))
                 {
@@ -48,10 +50,10 @@ namespace MobileWeb.Areas.Admin.Controllers
                     product.Name = model.Name;
                     product.MetaTitle = model.MetaTitle;
                     product.Description = model.Description;
-                    product.Image = model.Image;
+                    //product.Image = model.Image;
                     product.Price = model.Price;
                     product.PromotionPrice = model.PromotionPrice;
-                    //product.Quantily = model.Quantily;
+                    product.Quantily = model.Quantily;
                     product.CategoryID = model.CategoryID;
                     product.Warranty = model.Warranty;
                     product.Size = model.Size;
@@ -71,19 +73,41 @@ namespace MobileWeb.Areas.Admin.Controllers
                     product.Connect = model.Connect;
                     product.SpecialFeatures = model.SpecialFeatures;
                     product.CreateDate = DateTime.Now;
-                    product.Status = true;
-                    product.IncludeVAT = true;
-                    product.ViewCount = 0;
+                    product.Status = model.Status =true;
+                    product.IncludeVAT = model.IncludeVAT= true;
+                    product.IsDelete =model.IsDelete =  false;
+                    product.ViewCount = model.ViewCount=  0;
                     product.TopHot = model.TopHot;
-                   
+
+                    //if (fileUpload != null)
+                    //{
+                    //    string path = Path.Combine(Server.MapPath("~/Data/DataProduct"), Path.GetFileName(fileUpload.FileName));
+                    //    fileUpload.SaveAs(path);
+
+                    //}
+                    //Lưu tên file
+                    var fileName = Path.GetFileName(fileUpload.FileName);
+                    //Lưu đường dẫn của file
+                    var path = Path.Combine(Server.MapPath("/Data/images"), fileName);
+
+                    //Kiểm tra hình ảnh đã tồn tại chưa
+                    if (System.IO.File.Exists(path))
+                    {
+                        ModelState.AddModelError("", "Hình ảnh đã tồn tại");
+                    }
+                    else
+                    {
+                        fileUpload.SaveAs(path);
+                    }
+
+                    product.Image = model.Image = fileUpload.FileName;
+
                     var result = dao.Insert(product);
                     if (result > 0)
                     {
                         SetAlert("Thêm user thành công", "success");
                         return RedirectToAction("Index", "Product");
-                        //ViewBag.Success = "Tạo sản phẩm thành công";
-                        //model = new Product();
-                        //ModelState.Clear();
+                        
                     }
                     else
                     {
@@ -92,15 +116,76 @@ namespace MobileWeb.Areas.Admin.Controllers
                 }
             }
             SetViewBag();
-            return View("Create");
-        }
-         
-        public void SetViewBag(long? selectedId = null)
+            return View(model);
+        }       
+        
+
+        //edit
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            var dao = new ProductDao();
-            ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
+            var pro = new ProductDao().ViewDetail(id);
+            SetViewBag();
+            return View(pro);
+        }
+        [HttpPost]
+        public ActionResult Edit(Product product, HttpPostedFileBase fileUpload)
+        {
+            if (ModelState.IsValid)
+            {
+                var dao = new ProductDao();
+                if (fileUpload != null)
+                {
+                    string path = Path.Combine(Server.MapPath("~/Data/DataProduct"), Path.GetFileName(fileUpload.FileName));
+                    fileUpload.SaveAs(path);
+
+                }
+                ////image
+                ////Lưu tên file
+                //var fileName = Path.GetFileName(fileUpload.FileName);
+                ////Lưu đường dẫn của file
+                //var path = Path.Combine(Server.MapPath("~/Data/DataProduct"), fileName);
+
+                ////Kiểm tra hình ảnh đã tồn tại chưa
+                //if (System.IO.File.Exists(path))
+                //{
+                //    ModelState.AddModelError("", "Hình ảnh đã tồn tại");
+
+                //    //ViewBag.ThongBao = "Hình ảnh đã tồn tại";
+                //}
+                //else
+                //{
+                //    fileUpload.SaveAs(path);
+                //}
+                
+                product.Image = fileUpload.FileName;
+
+                
+                product.ModifiedDate = DateTime.Now;
+                var result = dao.Update(product);
+                if (result)
+                {
+                    SetAlert("Sửa sản phẩm thành công", "success");
+                    return RedirectToAction("Index", "Product");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhật sản phẩm không thành công");
+                }
+            }
+            SetViewBag();
+            return View("Edit");
         }
 
+
+        //delete
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            new ProductDao().Delete(id);
+
+            return RedirectToAction("Index");
+        }
 
         public JsonResult ChangeStatus(long id)
         {
@@ -109,6 +194,11 @@ namespace MobileWeb.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        public void SetViewBag(long? selectedId = null)
+        {
+            var dao = new ProductDao();
+            ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
     }
 }

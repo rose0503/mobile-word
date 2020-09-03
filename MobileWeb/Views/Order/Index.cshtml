@@ -1,0 +1,284 @@
+﻿@model PagedList.IPagedList<Model.EF.Order>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Đơn hàng của bạn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section jsFooter{
+    <script src="/Content/admin/js/controller/userController.js"></script>
+}
+<style>
+    body {
+        font-size: 14px !important;
+        font-family: Arial;
+        text-decoration: none !important;
+    }
+
+    .phan-trang {
+        display: flex;
+        margin: 15px 10px
+    }
+
+    .nav-muc-luc {
+        width: 15%;
+        margin-right: 20px;
+    }
+
+    .tab-content {
+        width: 80%;
+    }
+
+    .cau-gioi-thieu {
+        padding: 5px;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        border-radius: 4px;
+        height: 30.8px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .cau-gioi-thieu span:first-child {
+            margin-right: 5px;
+        }
+
+        .cau-gioi-thieu span:last-child {
+            font-weight: bold;
+            color: #ec1933;
+        }
+
+    .thong-tin-user {
+        margin-top: 10px;
+    }
+
+        .thong-tin-user div:first-child {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .thong-tin-user table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #e8e8e8;
+            width: 900px;
+            font-size: 14px;
+            box-shadow: 0 0 4px #e8e8e8;
+        }
+
+    table td, th {
+        font-size: 12px;
+    }
+
+    .thong-tin-user table td, th {
+        border: 1px solid #e8e8e8;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+    .table-striped > tbody > tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .row-cap-nhat-user {
+        display: grid;
+        grid-template-columns: 60% 43.5%;
+    }
+
+    .thong-tin-user .table2 {
+        width: 100%;
+    }
+
+        .thong-tin-user .table2 td input {
+            width: 100%;
+            height: 100%;
+        }
+
+    .cot-doi-pass {
+        margin-left: 10px;
+    }
+
+    .thong-tin-user .table3 {
+        width: 100%;
+    }
+
+    .nut-bam {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        border-bottom: 1px solid #f59000;
+    }
+
+        .nut-bam button {
+            border: 1px solid #f59000;
+            border-radius: 4px;
+            padding: 5px 0 10px 0;
+            width: 200px;
+            height: 36px;
+            margin: 15px;
+            background: #f59000;
+            color: white;
+        }
+
+    .thong-tin-don-hang .table4 {
+        margin-top: 10px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #e8e8e8;
+        width: 900px;
+        font-size: 14px;
+        box-shadow: 0 0 4px #e8e8e8;
+    }
+
+        .thong-tin-don-hang .table4 th, td {
+            border: 1px solid #e8e8e8;
+            text-align: left;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .thong-tin-don-hang .table4 .tieu-de-bang {
+            text-align: center;
+            font-weight: bold;
+            background-color: #adafb1;
+        }
+
+    .thong-tin-don-hang .table-sp {
+        width: 100%;
+    }
+
+        .thong-tin-don-hang .table-sp th {
+            background: #e8e8e8;
+        }
+</style>
+
+<body>
+
+
+
+    @{
+        var session = (MobileWeb.Common.UserLogin)Session[MobileWeb.Common.CommonConstants.USER_SESSION];
+    }
+    @if (session == null)
+    {
+        <div class="phan-trang">
+            <div class="nav flex-column nav-pills nav-muc-luc" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link " href="/User/Edit/@session.UserID">Thông tin tài khoản</a>
+                <a class="nav-link active" href="/Order/Index">Danh sách đơn của bạn</a>
+                <a class="nav-link " href="/Order/IndexFinish">Đơn hàng thành công</a>
+                <a class="nav-link " href="/Order/IndexCancel">Đơn hàng đã hủy</a>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <p style="justify-content">Vui lòng đăng nhập để tiếp tục</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="phan-trang">
+            <div class="nav flex-column nav-pills nav-muc-luc" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link " href="/User/Edit/@session.UserID">Thông tin tài khoản</a>
+                <a class="nav-link active" href="/Order/Index">Danh sách đơn của bạn</a>
+                <a class="nav-link " href="/Order/IndexFinish">Đơn hàng thành công</a>
+                <a class="nav-link " href="/Order/IndexCancel">Đơn hàng đã hủy</a>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Order", FormMethod.Get))
+                    {
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <div class="col-md-4">
+                                    <input type="text" value="@ViewBag.SearchString" class="form-control" name="searchString" />
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Ngày đặt</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th>SDT</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Trạng thái</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    if (session.UserID == item.CustomerID)
+                                    {
+                                        <tr id="row_@item.ID">
+                                            <td>@item.CreateDate</td>
+                                            <td>@item.ShipName</td>
+                                            <td>@item.ShipEmail</td>
+                                            <td>@item.ShipMobile</td>
+                                            <td>@item.ShipAddress</td>
+
+                                            @{ if (@item.Status == 1)
+                                                {
+                                                    <td> Đang chờ xác nhận</td>
+                                                }
+                                                else if (@item.Status == 2)
+                                                {
+                                                    <td> Đã xác nhận</td>
+                                                }
+                                                else if (@item.Status == 3)
+                                                {
+                                                    <td> Đang trong quá trình giao hàng</td>
+                                                }
+                                                else if (@item.Status == 4)
+                                                {
+                                                    <td> Hoàn thành</td>
+                                                }
+                                                else if (@item.Status == 5)
+                                                {
+                                                    <td> Đã hủy bởi bạn</td>
+                                                }
+                                                else
+                                                {
+                                                    <td> Đã hủy bởi hệ thống</td>
+                                                }
+
+
+                                            }
+                                            @*<td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status==5 ? "<strong>Đã hủy đơn</strong>" : "Đơn đang xác nhận")</a></td>*@
+                                            <td>
+                                                <a href="/Order/DetailOrder/@item.ID">Chi tiết</a>
+                                                <a href="#"> || </a>
+                                                <a href="/Order/Delete/@item.ID">Hủy Đơn</a>
+                                                @*<a href="/Admin/User/Delete/@item.ID">Xóa</a>*@
+                                                @*@Ajax.ActionLink("Xoá", "Delete", new { @id = item.ID }, new AjaxOptions
+                                            {
+                                                Confirm = "Bạn có muốn xoá bản ghi này?",
+                                                OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                HttpMethod = "Delete"
+                                            })*@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+                }
+
+
+           
+    </body>

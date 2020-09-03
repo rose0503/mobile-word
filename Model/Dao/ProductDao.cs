@@ -190,6 +190,74 @@ namespace Model.Dao
             return entity.ID;
         }
 
+
+        //Edit
+        public bool Update(Product model)
+        {
+            try
+            {
+                var product = db.Product.Find(model.ID);
+                product.Name = model.Name;
+
+                
+                //product.MetaTitle = model.MetaTitle;
+                product.Description = model.Description;
+                product.Image = model.Image;
+                product.Price = model.Price;
+                product.PromotionPrice = model.PromotionPrice;
+                //product.Quantily = model.Quantily;
+                product.CategoryID = model.CategoryID;
+                product.Warranty = model.Warranty;
+                product.Size = model.Size;
+                product.Memory = model.Memory;
+                product.Weight = model.Weight;
+                product.Color = model.Color;
+                product.Chip = model.Chip;
+                product.CPU = model.CPU;
+                product.OS = model.OS;
+                product.Ram = model.Ram;
+                product.Battery = model.Battery;
+                product.Screen = model.Screen;
+                product.FontCamera = model.FontCamera;
+                product.RearCameraNo1 = model.RearCameraNo1;
+                product.RearCameraNo2 = model.RearCameraNo2;
+                product.Sim = model.Sim;
+                product.Connect = model.Connect;
+                product.SpecialFeatures = model.SpecialFeatures;
+                product.ModifiedDate = DateTime.Now;
+                //product.Status = true;
+                //product.IncludeVAT = true;
+                //product.IsDelete = false;
+                //product.ViewCount = 0;
+                product.TopHot = model.TopHot;
+                                
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return false;
+            }
+
+        }
+
+        //delete
+        public bool Delete(int id)
+        {
+            try
+            {
+                var product = db.Product.Find(id);
+                db.Product.Remove(product);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
         public IEnumerable<Product> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<Product> model = db.Product;

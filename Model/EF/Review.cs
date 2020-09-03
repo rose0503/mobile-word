@@ -17,7 +17,7 @@ namespace Model.EF
         [StringLength(500)]
         public string Content { get; set; }
 
-        public float Rating { get; set; }
+        public decimal Rating { get; set; }
 
         public DateTime? DatePost { get; set; }
         public long ProductId { get; set; }
